@@ -39,11 +39,8 @@
     "books"
   ],
   "dependencies": {
-    "adm-zip": "^0.4.11",
-    "xml2js": "^0.4.23"
-  },
-  "optionalDependencies": {
-    "zipfile": "^0.5.11"
+    "adm-zip": "^0.5.12",
+    "xml2js": "^0.6.2"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.5",
