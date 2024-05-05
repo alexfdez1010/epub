@@ -2,28 +2,23 @@ var xml2js = require('xml2js');
 var xml2jsOptions = xml2js.defaults['0.1'];
 var EventEmitter = require('events').EventEmitter;
 
-try {
-    // zipfile is an optional dependency:
-    var ZipFile = require("zipfile").ZipFile;
-} catch (err) {
-    // Mock zipfile using pure-JS adm-zip:
-    var AdmZip = require('adm-zip');
+// Mock zipfile using pure-JS adm-zip:
+var AdmZip = require('adm-zip');
 
-    var ZipFile = function(filename) {
-        this.admZip = new AdmZip(filename);
-        this.names = this.admZip.getEntries().map(function(zipEntry) {
-            return zipEntry.entryName;
-        });
-        this.count = this.names.length;
-    };
-    ZipFile.prototype.readFile = function(name, cb) {
-        this.admZip.readFileAsync(this.admZip.getEntry(name), function(buffer, error) {
-            // `error` is bogus right now, so let's just drop it.
-            // see https://github.com/cthackers/adm-zip/pull/88
-            return cb(null, buffer);
-        });
-    };
-}
+var ZipFile = function(filename) {
+    this.admZip = new AdmZip(filename);
+    this.names = this.admZip.getEntries().map(function(zipEntry) {
+        return zipEntry.entryName;
+    });
+    this.count = this.names.length;
+};
+ZipFile.prototype.readFile = function(name, cb) {
+    this.admZip.readFileAsync(this.admZip.getEntry(name), function(buffer, error) {
+        // `error` is bogus right now, so let's just drop it.
+        // see https://github.com/cthackers/adm-zip/pull/88
+        return cb(null, buffer);
+    });
+};
 
 //TODO: Cache parsed data
 
